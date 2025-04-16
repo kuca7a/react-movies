@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import MovieCard from "./components/MovieCard";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 
@@ -13,14 +14,14 @@ const API_OPTIONS = {
 };
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState(" ");
-  const [errorMessage, setErrorMessage] = useState(""); // Updated this line
+  const [searchTerm, setSearchTerm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchMovies = async () => {
     setIsLoading(true);
-    setErrorMessage(""); // Updated this line
+    setErrorMessage("");
 
     try {
       const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
@@ -56,8 +57,8 @@ const App = () => {
         <header>
           <img src="./hero-img.png" alt="Hero Banner" />
           <h1>
-            Report <span className="text-gradient">DLG Errors</span> without any
-            additional hassle
+            Find <span className="text-gradient">Movies</span> you'll enjoy
+            without any additional hassle
           </h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
@@ -69,10 +70,10 @@ const App = () => {
           ) : errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           ) : (
-            <ul>
+            <ul className="grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {movieList.map((movie) => (
-                <li key={movie.id} className="text-white">
-                  {movie.title}
+                <li key={movie.id}>
+                  <MovieCard movie={movie} />
                 </li>
               ))}
             </ul>
